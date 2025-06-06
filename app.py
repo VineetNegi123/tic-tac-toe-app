@@ -19,6 +19,8 @@ if 'board' not in st.session_state:
     st.session_state.result = None
     st.session_state.username = ""
     st.session_state.level = "Easy"
+
+if 'ready' not in st.session_state:
     st.session_state.ready = False
 
 def check_winner(board):
@@ -35,7 +37,6 @@ def easy_ai(board):
     return random.choice(empty) if empty else None
 
 def medium_ai(board):
-    # Try to win or block
     for mark in ["O", "X"]:
         for i in range(9):
             if board[i] == "":
@@ -51,24 +52,31 @@ def computer_move(board, level):
     elif level == "Medium":
         return medium_ai(board)
     else:
-        return easy_ai(board)  # Placeholder for future Hard AI
+        return easy_ai(board)
 
 def reset_game():
     st.session_state.board = [""] * 9
     st.session_state.turn = "X"
     st.session_state.result = None
 
+def reset_all():
+    reset_game()
+    st.session_state.ready = False
+
 # Setup screen
 if not st.session_state.ready:
     st.markdown('<div class="title">Welcome to Tic Tac Toe</div>', unsafe_allow_html=True)
     st.session_state.username = st.text_input("Enter your name:", value=st.session_state.username)
-    st.session_state.level = st.selectbox("Choose difficulty:", ["Easy", "Medium"])
+    st.session_state.level = st.selectbox("Choose difficulty:", ["Easy", "Medium"], index=["Easy", "Medium"].index(st.session_state.level))
     if st.button("Start Game") and st.session_state.username.strip():
         st.session_state.ready = True
         st.rerun()
 else:
     st.markdown(f'<div class="title">Tic Tac Toe vs Computer ({st.session_state.level})</div>', unsafe_allow_html=True)
     st.subheader(f"Player: {st.session_state.username} (X)")
+    if st.button("Change Player / Difficulty"):
+        reset_all()
+        st.rerun()
     st.markdown("---")
 
     if st.session_state.result:
