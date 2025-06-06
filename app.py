@@ -6,9 +6,22 @@ st.set_page_config(page_title="Tic Tac Toe AI", page_icon="🌟", layout="center
 st.markdown("""
     <style>
         .main { background-color: #f0f2f6; }
-        .stButton>button { width: 100%; height: 80px; font-size: 28px; }
-        .stButton>button:hover { background-color: #d0e1f9; color: black; }
-        .title { text-align: center; font-size: 36px; font-weight: bold; }
+        .stButton>button {
+            width: 100%;
+            height: 60px;
+            font-size: 24px;
+        }
+        @media only screen and (max-width: 768px) {
+            .stButton>button {
+                height: 60px;
+                font-size: 20px;
+            }
+        }
+        .title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
     </style>
 """, unsafe_allow_html=True)
 
