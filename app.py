@@ -5,22 +5,39 @@ import time
 st.set_page_config(page_title="Tic Tac Toe AI", page_icon="🌟", layout="centered")
 st.markdown("""
     <style>
-        .main { background-color: #f0f2f6; }
+        .main { background-color: #ffffff; }
         .stButton>button {
             width: 100%;
-            height: 60px;
-            font-size: 24px;
+            height: 80px;
+            font-size: 30px;
+            border-radius: 12px;
+            background-color: #e0f7fa;
+            color: #006064;
+            border: 2px solid #00acc1;
+        }
+        .stButton>button:hover {
+            background-color: #b2ebf2;
+            color: #004d40;
         }
         @media only screen and (max-width: 768px) {
             .stButton>button {
-                height: 60px;
-                font-size: 20px;
+                height: 70px;
+                font-size: 24px;
             }
         }
         .title {
             text-align: center;
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
+            color: #00796b;
+        }
+        .cell {
+            text-align: center;
+            font-size: 36px;
+            padding: 16px;
+            background-color: #f1f8e9;
+            border-radius: 12px;
+            border: 2px solid #c5e1a5;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -78,16 +95,16 @@ def reset_all():
 
 # Setup screen
 if not st.session_state.ready:
-    st.markdown('<div class="title">Welcome to Tic Tac Toe</div>', unsafe_allow_html=True)
+    st.markdown('<div class="title">🎮 Welcome to Tic Tac Toe</div>', unsafe_allow_html=True)
     st.session_state.username = st.text_input("Enter your name:", value=st.session_state.username)
     st.session_state.level = st.selectbox("Choose difficulty:", ["Easy", "Medium"], index=["Easy", "Medium"].index(st.session_state.level))
-    if st.button("Start Game") and st.session_state.username.strip():
+    if st.button("Start Game 🚀") and st.session_state.username.strip():
         st.session_state.ready = True
         st.rerun()
 else:
-    st.markdown(f'<div class="title">Tic Tac Toe vs Computer ({st.session_state.level})</div>', unsafe_allow_html=True)
-    st.subheader(f"Player: {st.session_state.username} (X)")
-    if st.button("Change Player / Difficulty"):
+    st.markdown(f'<div class="title">🤖 Tic Tac Toe vs Computer ({st.session_state.level})</div>', unsafe_allow_html=True)
+    st.subheader(f"Player: {st.session_state.username} (❌)")
+    if st.button("🔄 Change Player / Difficulty"):
         reset_all()
         st.rerun()
     st.markdown("---")
@@ -99,7 +116,7 @@ else:
             emoji = "❌" if st.session_state.result == "X" else "⭕"
             winner = "You" if st.session_state.result == "X" else "Computer"
             st.success(f"{winner} Wins! {emoji}")
-        if st.button("Play Again 🔄"):
+        if st.button("Play Again 🔁"):
             reset_game()
             st.rerun()
     else:
@@ -118,4 +135,4 @@ else:
                             st.session_state.result = check_winner(st.session_state.board)
                         st.rerun()
                 else:
-                    st.markdown(f"<div style='text-align:center;font-size:32px;'>{st.session_state.board[i]}</div>", unsafe_allow_html=True)
+                    st.markdown(f"<div class='cell'>{st.session_state.board[i]}</div>", unsafe_allow_html=True)
